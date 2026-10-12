@@ -1,0 +1,63 @@
+primary_name: "Saumya Mundra"
+secondary_name: ""
+navbar_name: "Saumya Mundra"
+
+positions:
+- name: MS by Research, CSE
+- name: CVIT, IIIT Hyderabad
+
+email: "saumyamundra@gmail.com"
+# cv_link: /assets/cv.pdf   # put your CV at assets/cv.pdf and uncomment
+gscholar: bmRxLdAAAAAJ
+github: Saumya-svm
+linkedin: saumya-mundra
+# twitter: your_twitter_id  # Do not include the '@' symbol
+# orcid: 0000-0000-0000-0000
+
+short_bio_text_justify: false
+short_bio: >-
+  <p>
+    I'm an MS by Research student in Computer Science and Engineering at
+    <a href="https://www.iiit.ac.in/" target="_blank">IIIT Hyderabad</a>, working at
+    <a href="https://cvit.iiit.ac.in/" target="_blank">CVIT</a> under the guidance of
+    Prof. C. V. Jawahar and Dr. Ajoy Mondal. Before this, I completed my B.Tech in Chemical Engineering
+    at IIT Hyderabad.
+  </p>
+  <p>
+    My research focuses on computer vision and multimodal LLMs: building benchmarks and datasets
+    that probe how models perceive and reason about the visual world. I developed
+    <a href="https://saumya-svm.github.io/mist.github.io/" target="_blank">MIST</a>, a benchmark for
+    multilingual incidental scene text detection (WACV 2026), and I'm currently studying how multimodal
+    LLMs localize objects from compositional referring descriptions and reason about geometric
+    transformations.
+  </p>
+
+portrait_url: /assets/images/photos/portrait.png
+
+education:
+- name: International Institute of Information Technology, Hyderabad
+  position: MS by Research in Computer Science and Engineering
+  date: Jan. 2026 - present
+- name: Indian Institute of Technology, Hyderabad
+  position: B.Tech. in Chemical Engineering
+  date: 2020 - 2024
+
+experience:
+- name: CVIT, IIIT Hyderabad
+  position: Research Fellow
+  date: Aug. 2024 - present
+- name: Unstudio.ai
+  position: Machine Learning Intern
+  date: Jan. 2024 - Mar. 2024
+- name: Cooler Screens
+  position: Machine Learning Intern
+  date: May 2023 - Jul. 2023
+- name: Fellowship.ai
+  position: Machine Learning Intern
+  date: Oct. 2022 - Dec. 2022
+
+awards:
+- name: "JEE Advanced: All India Rank 5718"
+  date: 2020
+- name: "JEE Main: 99.2 percentile"
+  date: 2020

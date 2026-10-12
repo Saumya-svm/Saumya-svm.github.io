@@ -1,0 +1,11 @@
+---
+show: true
+width: 4
+date: 2024-06-01 00:01:00 +0530
+group: Projects
+---
+<div class="p-4">
+  <h5 class="mt-0">Wind PMF Forecasting</h5>
+  <p class="small text-muted mb-2">Modelled wind probability distributions from time-series data with TCNs, Transformers and RNNs; explored GANs and diffusion models for synthetic wind data, tuned with Bayesian optimisation and genetic algorithms.</p>
+  <a class="small" target="_blank" href="https://github.com/Saumya-svm/WindPMF"><i class="fab fa-github"></i> Code</a>
+</div>
