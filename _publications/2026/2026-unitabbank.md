@@ -14,4 +14,7 @@ authors:
 links:
   Paper: https://openaccess.thecvf.com/content/WACV2026/papers/Mondal_UniTabBank_A_Large_Scale_Multi-Lingual_Multi-Layout_Multi-Type_Multi-Format_Dataset_for_WACV_2026_paper.pdf
   IEEE: https://ieeexplore.ieee.org/abstract/document/11492485/
+  Website: https://ajoymondal.github.io/UniTabBank/
+  Dataset: https://huggingface.co/datasets/ajoymondal/UniTabBank
+  Code: https://github.com/ajoymondal/UniTabDet
 ---
