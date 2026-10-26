@@ -1,11 +1,14 @@
 /* Research-style long-form post layout (used by _layouts/post.html) */
 body.post-page {
-    --ink: #0b1220;
-    --ink-soft: #2b3445;
-    --muted: #667085;
-    --line: #e4e7ec;
-    --accent: #2563eb;
-    --grid: rgba(37, 99, 235, 0.07);
+    --ink: #1d2b2a;
+    --ink-soft: #3a4a48;
+    --muted: #6b7c79;
+    --line: #e1e8e6;
+    --accent: #3d7d74;
+    --accent-soft: #eef5f3;
+    --sand: #b8875a;
+    --sand-soft: #fbf6ee;
+    --grid: rgba(61, 125, 116, 0.08);
     --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
     --mono: "JetBrains Mono", ui-monospace, monospace;
     padding-top: 56px;
@@ -34,7 +37,7 @@ body.post-page {
 
 /* Hero on graph paper */
 .post-hero {
-    background-color: #fbfcfe;
+    background-color: #f7faf9;
     background-image:
         linear-gradient(var(--grid) 1px, transparent 1px),
         linear-gradient(90deg, var(--grid) 1px, transparent 1px);
@@ -63,7 +66,7 @@ body.post-page {
 
 .post-kicker span {
     margin: 0 0.5rem;
-    color: #c0c6d0;
+    color: #bccac7;
 }
 
 .post-title {
@@ -288,7 +291,7 @@ body.post-page {
     font-family: var(--mono);
     font-size: 0.85em;
     color: var(--ink);
-    background: #f2f4f7;
+    background: var(--accent-soft);
     border-radius: 4px;
     padding: 0.1em 0.35em;
 }
@@ -317,7 +320,7 @@ body.post-page {
     color: var(--muted);
     margin-bottom: 2.5rem;
     padding: 0.7rem 1.25rem;
-    background: #f9fafb;
+    background: #f7faf9;
     border: 1px solid var(--line);
     border-top: 0;
 }
@@ -364,6 +367,21 @@ body.post-page {
 /* Finding callouts */
 .post-body .finding-box {
     margin: 2.5rem 0;
+    background: var(--accent-soft);
+    border-color: var(--accent);
+}
+
+.post-body .finding-box .finding-label {
+    background: var(--accent);
+}
+
+.post-body .finding-tldr {
+    background: var(--sand-soft);
+    border-color: var(--sand);
+}
+
+.post-body .finding-tldr .finding-label {
+    background: var(--sand);
 }
 
 .post-body .finding-label {
