@@ -1,12 +1,12 @@
 ---
-layout: blog_post
+layout: post
 title: "Do MLLMs Understand 2D Geometric Transformations?"
 date: 2026-10-26
+author: Saumya Mundra
+cover: /assets/images/blog/mllm-geometry/example_pair.png
 tags: [MLLMs, geometry, evaluation]
 excerpt: "An experimental study using synthetic polygons to test correspondence, transformation recognition, direction, and magnitude."
 ---
-
-*An experimental study using synthetic polygons to test correspondence, transformation recognition, direction, and magnitude.*
 
 Suppose we show a multimodal large language model (MLLM) two polygons: an original and its transformed state. Can it identify which vertices correspond, what transformation occurred, in which direction, and by how much?
 
