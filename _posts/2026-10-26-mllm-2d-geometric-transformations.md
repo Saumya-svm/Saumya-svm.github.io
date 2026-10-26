@@ -1,0 +1,127 @@
+---
+layout: blog_post
+title: "Do MLLMs Understand 2D Geometric Transformations?"
+date: 2026-10-26
+tags: [MLLMs, geometry, evaluation]
+excerpt: "An experimental study using synthetic polygons to test correspondence, transformation recognition, direction, and magnitude."
+---
+
+*An experimental study using synthetic polygons to test correspondence, transformation recognition, direction, and magnitude.*
+
+Suppose we show a multimodal large language model (MLLM) two polygons: an original and its transformed state. Can it identify which vertices correspond, what transformation occurred, in which direction, and by how much?
+
+We studied this question using synthetic 2D polygons. Each original–transformed pair is generated using known geometric transformations, so the transformation parameters and vertex correspondences are available by construction. Rather than evaluating a single prediction, we break the problem into five independently scored tasks and examine where the models succeed or fail.
+
+![An original six-vertex polygon and the same polygon after translation and rotation.](/assets/images/blog/mllm-geometry/example_pair.png)
+
+*Example input pair from the benchmark (translation + rotation). The model sees the original and transformed polygon; vertex and edge labels are assigned independently in each state, so matching label names is not enough.*
+
+## The setup
+
+We use four primitive transformations: **translation (T)**, **rotation (R)**, **uniform scaling (S)**, and **anisotropic scaling (D)**. We also test valid compositions of two or three primitives, for example **T+R**, **R+S**, and **T+R+D**. In total, the benchmark contains eleven transformation classes.
+
+The polygons range from triangles to decagons, with 50 samples for each polygon-family and transformation-class pair. We generate non-degenerate polygons, apply non-identity transformations, and randomize vertex and edge labels independently between the original and transformed states. The two polygons share axis limits so their relative positions and sizes remain visible.
+
+Synthetic polygons help us control the task. In natural images, object identity, texture, camera pose, occlusion, and plausible motion can all influence a model's answer. Here the transformation is known exactly, and we can evaluate the individual parts of the inference separately. This does not make the setting a substitute for natural images or 3D scenes.
+
+## Five questions about the same transformation
+
+We separate transformation inference into five tasks:
+
+| Task | What the model is asked |
+| --- | --- |
+| **Corr-V** | Which transformed vertex corresponds to a queried original vertex? |
+| **Corr-E** | Which transformed edge corresponds to a queried original edge? |
+| **H1: Type** | Which transformation, or combination of transformations, occurred? |
+| **H2: Direction** | What is the direction of each transformation—for example, clockwise rotation or the quadrant of translation? |
+| **H3: Magnitude** | What are the numerical parameters—for example, rotation angle, scale factor, or translation distance? |
+
+![The benchmark input, task types, transformation classes, and parameter distributions.](/assets/images/blog/mllm-geometry/task_overview.png)
+
+*Task overview. The same underlying samples support correspondence, type, direction, and magnitude questions.*
+
+These are **oracle-isolated diagnostics**. For H1, the model is given ground-truth correspondences; for H2, it also receives the correct transformation type; for H3, it additionally receives the correct directions. This prevents an earlier mistake from automatically determining the result of a later task. The scores therefore describe the individual tasks, not the accuracy of a fully end-to-end transformation estimator.
+
+We evaluate each task under an **image-only** condition, using the rendered polygons, and a **text-only** condition, using explicit vertex coordinates. Text-only edge correspondence is omitted because an edge is determined by its endpoints.
+
+We evaluate zero-shot models from InternVL3, InternVL3.5, Qwen3-VL, Gemini, and GPT. For reference, seven people each answered 20 image-only questions per task, and we implemented an oracle-correspondence geometric solver that works from exact coordinates. The solver is a reference for the constructed geometry problem, not an image-based baseline; it scores 100% on H1–H3.
+
+The human study is small, so treat its numbers as a rough reference point rather than a precise ceiling. Aggregated over one to three primitives, humans reached **88.6%** on both correspondence tasks, **86.3%** on H1, **67.3%** on H2, and **51.7% MRA** on H3, above every image-only model on every task.
+
+## What did we observe?
+
+### 1. Correspondence is not reliable, particularly under rotation
+
+The strongest image-only vertex correspondence score is **62.4%** (Gemini-3.1-Pro-Preview); its edge correspondence score is **62.0%**. The seven human participants reached **88.6%** on both tasks. Random correspondence averages **17.9%** across the polygon families.
+
+Performance also depends heavily on the transformation. For Qwen3-VL-8B and Gemini-3.5-Flash, translation and scaling are comparatively easier, while rotation is the most difficult single primitive for correspondence. Compositions containing rotation are also among the difficult cases.
+
+![Vertex and edge correspondence accuracy across transformation families.](/assets/images/blog/mllm-geometry/correspondence_by_transform.png)
+
+*Image-only correspondence accuracy by transformation for Qwen3-VL-8B-Instruct and Gemini-3.5-Flash. `n` is the number of transformation primitives.*
+
+Using explicit coordinates helps some models, but not all. For Gemini-3.1-Pro-Preview, vertex correspondence increases from **62.4%** with images to **71.1%** with coordinates. Several open models still perform poorly in the text-only setting. The difficulty is therefore not entirely explained by extracting vertices from pixels.
+
+### 2. Rotation becomes a default prediction
+
+Transformation-type recognition (H1) has a noticeably uneven error profile. In the single-primitive setting, Qwen3-VL-8B reaches **34.6%** accuracy against a **25%** chance baseline. Gemini-3.5-Flash reaches **72.2%**.
+
+The confusion matrices explain part of the difference. Qwen3-VL-8B recognizes **99%** of rotation examples as rotation, but also predicts rotation for **76%** of uniform-scaling examples and **92%** of anisotropic-scaling examples. High rotation recall therefore does not mean that the model can distinguish rotation from the other transformations.
+
+![Transformation-type confusion matrices for single primitives and pairs.](/assets/images/blog/mllm-geometry/transformation_confusions.png)
+
+*H1 image-only confusion matrices. Rows are ground truth and columns are predictions. Several open models assign non-rotation examples to rotation; for composed transformations, they frequently default to T+R.*
+
+This behavior continues under composition. In the two-primitive setting, several models predict **T+R** for many examples from other classes. The task is not simply difficult across all classes in the same way; the predictions are concentrated in a few classes.
+
+### 3. Direction and magnitude deteriorate under composition
+
+Knowing the transformation type does not mean a model can recover its parameters.
+
+For H2, we provide the correct transformation type and ask for its direction. With a single primitive, GPT-5.4 reaches **68.5%** image-only direction accuracy. With three primitives, Gemini-3.5-Flash reaches **12.0%**. H2 uses strict joint accuracy over the directions of all active primitives, so its chance level also changes with composition; these figures should not be compared as if the label spaces were identical.
+
+For H3, we supply both the correct type and direction and ask for numerical magnitudes. We measure Mean Relative Accuracy (MRA) across a range of relative-error tolerances and compare it with a constant-prediction prior that knows the oracle type and direction but not the input geometry. Under two- and three-primitive compositions, **all evaluated models fall below this prior**. For three primitives, GPT-5.4 obtains **27.1% MRA**, while the prior reaches **49.2%**.
+
+We do not use the three-primitive H1 classification results for ranking: only two valid classes remain, giving that task a 50% chance floor. The evidence for deterioration under three-way composition comes instead from the direction and magnitude tasks.
+
+### 4. Detecting a change is different from identifying the transformation
+
+Some of the most informative results came from additional probes on Qwen3-VL-8B.
+
+The four-class classification task mixes at least two questions: can the model see what changed, and can it associate that change with the correct transformation? To separate them, we asked binary questions about specific properties—changes in position, orientation, size, or anisotropic stretch.
+
+| Probe | Result |
+| --- | ---: |
+| Anisotropic stretch detected | **64%** |
+| Same model's anisotropic-scaling classification | **0%** |
+| Uniform size change detected at ordinary scale | **6%** |
+| Uniform size change detected when the scale factor is increased | **100%** |
+| Uniform-scaling classification in that large-scale setting | **0%** |
+
+The large-scale probe is particularly revealing. Making the size change more obvious fixes the binary size-change question, but the model still fails to select uniform scaling in the four-class task. Detecting the relevant geometric change does not guarantee correct transformation classification.
+
+We checked several simpler explanations. The models generally read plot axes and vertex labels correctly. Changes in canvas configuration have a small effect on H1, and increasing rendering resolution produces little change in H1, though it helps correspondence. Adding definitions of the transformations to the prompt also fails to recover uniform or anisotropic scaling for the two open models tested.
+
+These checks do not establish a mechanism. They narrow down some immediate explanations for the observed failures.
+
+### 5. A small amount of supervision changes the behavior
+
+We also tested whether the zero-shot failures could be improved through limited supervision. We fine-tuned **Qwen3-VL-8B-Instruct** using LoRA for four-class transformation recognition, varying the number of training examples per class.
+
+With **70 examples per class**, H1 accuracy increases from **35.5% to 56.8%**. (The 35.5% baseline comes from the zero-shot model on the LoRA evaluation split, so it differs slightly from the 34.6% reported in the main results above.) The improvement is not uniform: translation, rotation, and uniform scaling recover to moderate accuracy, while anisotropic scaling remains difficult.
+
+The adapter is trained only on transformation classification, but the property-level probes also improve. Uniform size-change detection rises from **6% to 98%**, and anisotropic-stretch detection rises from **64% to 100%**. We also train adapters on individual polygon families and evaluate them on other families; the results show transfer beyond the training shape, although performance varies by family.
+
+![LoRA adaptation tested across held-out polygon families.](/assets/images/blog/mllm-geometry/cross_shape_lora.png)
+
+*Cross-shape H1 accuracy for Qwen3-VL-8B-Instruct. Rows are the polygon family used for training; columns are the test family. BASE is the zero-shot model.*
+
+This was a diagnostic pilot on one open model, not a general study of geometric fine-tuning. It does show that at least part of the observed zero-shot behavior is recoverable with limited supervision.
+
+## What the experiments do—and do not—tell us
+
+We used a deliberately restricted setting: 2D polygons, exact transformations, no texture, and no occlusion. The results characterize how the evaluated MLLMs answer these particular geometric questions. They do not establish how the same models would perform on natural images, object motion in 3D, or robotics tasks.
+
+There are also limits to how we interpret the failures. The oracle-isolated tasks help us locate errors but do not describe a normal end-to-end inference pipeline. A separate qualitative analysis of elicited explanations found cases where a model stated the correct visual evidence but reached the wrong conclusion, and cases where it reasoned consistently from an incorrect visual observation. We treat those explanations as behavioral evidence, not a direct view of the model's internal representations.
+
+In this controlled setting, we find that models can sometimes detect geometric changes without identifying the corresponding transformation, and that direction and magnitude inference become less reliable as transformations are composed. The main value of the decomposition is that these behaviors are visible separately rather than being hidden inside one overall accuracy number.
