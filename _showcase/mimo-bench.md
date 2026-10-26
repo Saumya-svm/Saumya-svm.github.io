@@ -4,6 +4,7 @@ width: 4
 date: 2026-10-26 00:01:00 +0530
 group: Projects
 ---
+<img src="{{ '/assets/images/covers/mimo-bench.jpg' | relative_url }}" class="img-fluid rounded-xl-top" alt="MIMO-Bench">
 <div class="p-4">
   <h5 class="mt-0">MIMO-Bench: Visual Reasoning in Dense Scenes</h5>
   <p class="small text-muted mb-2">Benchmark of 3,802 attribute-binding and counting questions over scenes with many same-category instances, where state-of-the-art MLLMs trail humans by over 30 points. Preprint, 2026.</p>
