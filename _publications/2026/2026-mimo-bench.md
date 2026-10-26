@@ -10,8 +10,8 @@ abstract: >-
 authors:
   - Saumya Mundra
   - Ajoy Mondal
-  - C. V. Jawahar
   - Vineeth N Balasubramanian
+  - C. V. Jawahar
 links:
   Website: https://saumya-svm.github.io/MIMO-Bench/
   Paper: https://saumya-svm.github.io/MIMO-Bench/static/pdfs/paper.pdf
