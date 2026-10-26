@@ -38,7 +38,7 @@ We separate transformation inference into five tasks:
 | **H2: Direction** | What is the direction of each transformation—for example, clockwise rotation or the quadrant of translation? |
 | **H3: Magnitude** | What are the numerical parameters—for example, rotation angle, scale factor, or translation distance? |
 
-![The benchmark input, task types, transformation classes, and parameter distributions.](/assets/images/blog/mllm-geometry/task_overview.png)
+![The benchmark input, task types, transformation classes, and parameter distributions.](/assets/images/blog/mllm-geometry/task_overview.svg)
 
 *Task overview. The same underlying samples support correspondence, type, direction, and magnitude questions.*
 
@@ -58,7 +58,7 @@ The strongest image-only vertex correspondence score is **62.4%** (Gemini-3.1-Pr
 
 Performance also depends heavily on the transformation. For Qwen3-VL-8B and Gemini-3.5-Flash, translation and scaling are comparatively easier, while rotation is the most difficult single primitive for correspondence. Compositions containing rotation are also among the difficult cases.
 
-![Vertex and edge correspondence accuracy across transformation families.](/assets/images/blog/mllm-geometry/correspondence_by_transform.png)
+![Vertex and edge correspondence accuracy across transformation families.](/assets/images/blog/mllm-geometry/correspondence_by_transform.svg)
 
 *Image-only correspondence accuracy by transformation for Qwen3-VL-8B-Instruct and Gemini-3.5-Flash. `n` is the number of transformation primitives.*
 
@@ -72,7 +72,7 @@ Transformation-type recognition (H1) has a noticeably uneven error profile. In t
 
 The confusion matrices explain part of the difference. Qwen3-VL-8B recognizes **99%** of rotation examples as rotation, but also predicts rotation for **76%** of uniform-scaling examples and **92%** of anisotropic-scaling examples. High rotation recall therefore does not mean that the model can distinguish rotation from the other transformations.
 
-![Transformation-type confusion matrices for single primitives and pairs.](/assets/images/blog/mllm-geometry/transformation_confusions.png)
+![Transformation-type confusion matrices for single primitives and pairs.](/assets/images/blog/mllm-geometry/transformation_confusions.svg)
 
 *H1 image-only confusion matrices. Rows are ground truth and columns are predictions. Several open models assign non-rotation examples to rotation; for composed transformations, they frequently default to T+R.*
 
@@ -133,7 +133,7 @@ The learning curve has three phases. With five or fewer examples per class, the 
 
 The adapter is trained only on transformation classification, but the property-level probes also improve. Uniform size-change detection rises from **6% to 98%**, and anisotropic-stretch detection rises from **64% to 100%**. We also train adapters on individual polygon families and evaluate them on other families; the results show transfer beyond the training shape, although performance varies by family.
 
-![LoRA adaptation tested across held-out polygon families.](/assets/images/blog/mllm-geometry/cross_shape_lora.png)
+![LoRA adaptation tested across held-out polygon families.](/assets/images/blog/mllm-geometry/cross_shape_lora.svg)
 
 *Cross-shape H1 accuracy for Qwen3-VL-8B-Instruct. Rows are the polygon family used for training; columns are the test family. BASE is the zero-shot model.*
 
