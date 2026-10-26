@@ -5,6 +5,15 @@ date: 2026-10-26
 author: Saumya Mundra
 cover: /assets/images/blog/mllm-geometry/example_pair.png
 tags: [MLLMs, geometry, evaluation]
+highlights:
+  - value: "62.4%"
+    label: "best image-based vertex matching (humans: 88.6%)"
+  - value: "92%"
+    label: "of anisotropic-scaling cases Qwen3-VL-8B calls rotation"
+  - value: "100% / 0%"
+    label: "size change detected vs. correctly named as scaling"
+  - value: "35.5 → 56.8%"
+    label: "type accuracy after LoRA on 70 examples per class"
 excerpt: "An experimental study using synthetic polygons to test correspondence, transformation recognition, direction, and magnitude."
 ---
 
