@@ -4,6 +4,7 @@ width: 4
 date: 2026-02-28 00:01:00 +0530
 group: Projects
 ---
+<img src="{{ '/assets/images/covers/unitabbank.jpg' | relative_url }}" class="img-fluid rounded-xl-top" alt="UniTabBank">
 <div class="p-4">
   <h5 class="mt-0">UniTabBank: Multilingual Table Detection</h5>
   <p class="small text-muted mb-2">Large-scale table detection dataset with 55K document images and 82K annotated tables across 28 languages, layouts, table types and formats, with the UniTabDet detector. WACV 2026.</p>

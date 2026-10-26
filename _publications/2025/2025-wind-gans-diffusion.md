@@ -6,6 +6,7 @@ pub_pre:        "In "
 pub:            "Data-Driven Insights and Analytics for Measurable Sustainable Development Goals"
 pub_post:       " (Morgan Kaufmann), pp. 147-161"
 pub_date:       "2025"
+cover:          /assets/images/covers/wind-gans-diffusion.jpg
 abstract: >-
   Comparing GANs and diffusion models for generating synthetic wind data.
 authors:

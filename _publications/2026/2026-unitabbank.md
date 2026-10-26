@@ -4,6 +4,7 @@ date:           2026-03-05 00:01:00 +0530
 selected:       true
 pub:            "IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)"
 pub_date:       "2026"
+cover:          /assets/images/covers/unitabbank.jpg
 abstract: >-
   A large-scale dataset for table detection covering many languages, document layouts, table types and formats.
 authors:

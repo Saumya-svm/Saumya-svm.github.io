@@ -4,6 +4,7 @@ date:           2025-12-18 00:01:00 +0530
 selected:       false
 pub:            "Indian Control Conference (ICC)"
 pub_date:       "2025"
+cover:          /assets/images/covers/wind-tcn.jpg
 abstract: >-
   Modelling wind probability distributions from time-series data with temporal convolutional networks.
 authors:
