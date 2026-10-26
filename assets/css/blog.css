@@ -264,3 +264,42 @@ h1, h2, h3, h4, h5, h6,
 .blog-toc-nav {
     scrollbar-width: none;
 }
+
+/* Highlighted key-finding callouts */
+.blog-content .finding-box {
+    background: #eef4ff;
+    border-left: 5px solid #2563eb;
+    border-radius: 0.5rem;
+    padding: 1rem 1.25rem;
+    margin: 1.75rem 0;
+    box-shadow: 0 1px 3px rgba(37, 99, 235, 0.12);
+}
+
+.blog-content .finding-box p,
+.blog-content .finding-box ul {
+    margin-bottom: 0;
+    font-size: 1.05rem;
+}
+
+.blog-content .finding-box li:last-child {
+    margin-bottom: 0;
+}
+
+.blog-content .finding-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #2563eb;
+    margin-bottom: 0.4rem;
+}
+
+.blog-content .finding-tldr {
+    background: #fff8e6;
+    border-left-color: #d97706;
+    box-shadow: 0 1px 3px rgba(217, 119, 6, 0.15);
+}
+
+.blog-content .finding-tldr .finding-label {
+    color: #b45309;
+}
