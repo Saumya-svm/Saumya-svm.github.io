@@ -7,8 +7,7 @@ positions:
 - name: IIIT Hyderabad
 
 email: "saumyamundra@gmail.com"
-# CV: no current PDF yet. Put the approved CV at assets/cv.pdf, then uncomment the next line.
-# cv_link: /assets/cv.pdf
+cv_link: /assets/cv.pdf
 gscholar: bmRxLdAAAAAJ
 github: Saumya-svm
 linkedin: saumya-mundra
@@ -50,6 +49,9 @@ education:
   date: 2020 - 2024
 
 experience:
+- name: CVIT, IIIT Hyderabad
+  position: MS Research Student
+  date: Jan. 2026 - present
 - name: CVIT, IIIT Hyderabad
   position: Research Fellow
   date: Aug. 2024 - Jan. 2026
