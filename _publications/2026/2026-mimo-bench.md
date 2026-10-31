@@ -2,7 +2,7 @@
 title:          "What do MLLMs know about \"Waldo\"? Evaluating Visual Reasoning under Multi-Instance Multi-Object Challenges"
 date:           2026-10-26 00:01:00 +0530
 selected:       true
-pub:            "Preprint"
+pub:            "arXiv preprint"
 pub_date:       "2026"
 cover:          /assets/images/covers/mimo-bench.jpg
 abstract: >-
@@ -13,6 +13,6 @@ authors:
   - Vineeth N Balasubramanian
   - C. V. Jawahar
 links:
+  arXiv: https://arxiv.org/abs/2610.38957
   Website: https://saumya-svm.github.io/MIMO-Bench/
-  Paper: https://saumya-svm.github.io/MIMO-Bench/static/pdfs/paper.pdf
 ---
