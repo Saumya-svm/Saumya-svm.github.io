@@ -12,10 +12,6 @@ navbar_title: Home
 
         {% include widgets/profile_card_bio_only.html %}
 
-        {% if site.data.display.homepage.show_experience %}
-            {% include widgets/experience_card.html %}
-        {% endif %}
-
         {% if site.data.display.homepage.show_news %}
         {% assign count_news = site.news | size %}
         {% if count_news > 0 %}
@@ -30,6 +26,14 @@ navbar_title: Home
         publications=pubs
         title='<i class="fas fa-star"></i> Selected Publications'
         %}
+        {% endif %}
+
+        {% include widgets/current_research_card.html %}
+
+        {% include widgets/recent_writing_card.html limit=2 %}
+
+        {% if site.data.display.homepage.show_experience %}
+            {% include widgets/experience_card.html %}
         {% endif %}
     </div>
 </div>

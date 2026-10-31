@@ -1,0 +1,16 @@
+{% assign posts = site.posts | sort: "date" | reverse %}
+{% if posts.size > 0 %}
+<div class="my-3 p-0 bg-white shadow-sm rounded-xl">
+    <h6 class="border-bottom border-gray p-3 mb-0">
+        <i class="fas fa-pen-nib"></i> Recent Writing
+        <a href="{{ '/blog' | relative_url }}">(all posts <i class="fas fa-angle-double-right"></i>)</a>
+    </h6>
+    {% for post in posts limit: include.limit %}
+    <div class="p-3 {% unless forloop.last %}border-bottom border-gray{% endunless %}">
+        <a class="font-weight-bold" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        <div class="small text-secondary mb-1">{{ post.date | date: "%B %-d, %Y" }}</div>
+        <div class="small text-muted">{{ post.excerpt | strip_html | strip | truncate: 220 }}</div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
